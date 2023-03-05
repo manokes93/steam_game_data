@@ -6,15 +6,9 @@ from urllib3.util.retry import Retry
 from concurrent.futures import ThreadPoolExecutor
 
 
-# url = f'http://store.steampowered.com/api/appdetails?appids={976310}'
-# response = requests.get(url)
-# json = response.json()
-# print(json)
-
 def my_games():
-    my_steamid = '76561198070917858'
 
-    my_owned_games = requests.get(f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={creds.api_key}&steamid={my_steamid}&format=json').json()
+    my_owned_games = requests.get(f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={creds.api_key}&steamid={creds.my_steamid}&format=json').json()
 
     data = my_owned_games['response']['games']
 
@@ -79,7 +73,6 @@ def game_details():
                 details_rows['metacritic_score'].append(None)
         except KeyError:
             details_rows['metacritic_score'].append(None)
-        print('Row added for ' + app)
 
     # Use ThreadPoolExecutor to make parallel requests
     with ThreadPoolExecutor(max_workers=12) as executor:
